@@ -17,7 +17,7 @@ window.app = {
     onSetSortBy,
     onSetFilterBy,
 }
-
+console.log('test');
 function onInit() {
     loadAndRenderLocs()
 
