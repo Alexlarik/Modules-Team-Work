@@ -69,7 +69,6 @@ function renderLocs(locs) {
         displayLoc(selectedLoc)
     }
     document.querySelector('.debug').innerText = JSON.stringify(locs, null, 2)
-    console.log(locs);
 }
 
 function onRemoveLoc(locId) {
