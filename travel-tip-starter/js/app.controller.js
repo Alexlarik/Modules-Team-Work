@@ -16,6 +16,7 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    onOpenDialog,
 }
 console.log('test');
 function onInit() {
@@ -51,7 +52,7 @@ function renderLocs(locs) {
             </p>
             <div class="loc-btns">     
                <button title="Delete" onclick="app.onRemoveLoc('${loc.id}')">🗑️</button>
-               <button title="Edit" onclick="app.onUpdateLoc('${loc.id}')">✏️</button>
+               <button title="Edit" onclick="app.onOpenDialog('${loc.id}')">✏️</button>
                <button title="Select" onclick="app.onSelectLoc('${loc.id}')">🗺️</button>
             </div>     
         </li>`}).join('')
@@ -138,11 +139,19 @@ function onPanToUserPos() {
         })
 }
 
-function onUpdateLoc(locId) {
+function onOpenDialog(locId){
     const elDialog = document.querySelector(".dialog");
     elDialog.classList.add("open");
+    // const elName = elDialog.querySelector(".edit-name").value;
+    // const elRate = elDialog.querySelector(".edit-rate").value;
+    onUpdateLoc(locId, elDialog)
+}
+
+function onUpdateLoc(locId, elDialog) {
     const elName = elDialog.querySelector(".edit-name").value;
     const elRate = elDialog.querySelector(".edit-rate").value;
+    console.log(elDialog.querySelector(".edit-name").value);
+    console.log(elDialog.querySelector(".edit-rate").value);
 
     locService.getById(locId).then((loc) => {
       const rate = elRate;

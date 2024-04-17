@@ -14,3 +14,7 @@
     }
 }
 
+dialog{
+    background-color: #6fd9cc;
+    z-index: 9999999;
+}
