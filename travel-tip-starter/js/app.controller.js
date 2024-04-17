@@ -16,8 +16,6 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
-    confirmDeleteLoc,
-    lastUpdatedChart
 }
 console.log('test');
 function onInit() {
@@ -43,7 +41,6 @@ function renderLocs(locs) {
         <li class="loc ${className}" data-id="${loc.id}">
             <h4>  
                 <span>${loc.name}</span>
-                <span>${loc.geo.address}</span>
                 <span title="${loc.rate} stars">${'★'.repeat(loc.rate)}</span>
             </h4>
             <p class="muted">
@@ -53,7 +50,7 @@ function renderLocs(locs) {
                 : ''}
             </p>
             <div class="loc-btns">     
-               <button title="Delete" onclick="app.confirmDeleteLoc('${loc.id}')">🗑️</button>
+               <button title="Delete" onclick="app.onRemoveLoc('${loc.id}')">🗑️</button>
                <button title="Edit" onclick="app.onUpdateLoc('${loc.id}')">✏️</button>
                <button title="Select" onclick="app.onSelectLoc('${loc.id}')">🗺️</button>
             </div>     
@@ -121,7 +118,6 @@ function onAddLoc(geo) {
 function loadAndRenderLocs() {
     locService.query()
         .then(renderLocs)
-        // .then(lastUpdatedChart)
         .catch(err => {
             console.error('OOPs:', err)
             flashMsg('Cannot load locations')
@@ -143,24 +139,49 @@ function onPanToUserPos() {
 }
 
 function onUpdateLoc(locId) {
-    locService.getById(locId)
-        .then(loc => {
-            const rate = prompt('New rate?', loc.rate)
-            if (rate !== loc.rate) {
-                loc.rate = rate
-                locService.save(loc)
-                    .then(savedLoc => {
-                        flashMsg(`Rate was set to: ${savedLoc.rate}`)
-                        loadAndRenderLocs()
-                    })
-                    .catch(err => {
-                        console.error('OOPs:', err)
-                        flashMsg('Cannot update location')
-                    })
+    const elDialog = document.querySelector(".dialog");
+    elDialog.classList.add("open");
+    const elName = elDialog.querySelector(".edit-name").value;
+    const elRate = elDialog.querySelector(".edit-rate").value;
 
-            }
-        })
+    locService.getById(locId).then((loc) => {
+      const rate = elRate;
+      const name = elName
+      if (rate !== loc.rate ||name!==loc.name) {
+        loc.rate = rate;
+        loc.name=name
+        locService
+          .save(loc)
+          .then((savedLoc) => {
+            flashMsg(` ${name} Rate was set to: ${savedLoc.rate}`);
+            loadAndRenderLocs();
+          })
+          .catch((err) => {
+            console.error("OOPs:", err);
+            flashMsg("Cannot update location");
+          });
+      }
+    });
 }
+// function onUpdateLoc(locId) {
+//     locService.getById(locId)
+//         .then(loc => {
+//             const rate = prompt('New rate?', loc.rate)
+//             if (rate !== loc.rate) {
+//                 loc.rate = rate
+//                 locService.save(loc)
+//                     .then(savedLoc => {
+//                         flashMsg(`Rate was set to: ${savedLoc.rate}`)
+//                         loadAndRenderLocs()
+//                     })
+//                     .catch(err => {
+//                         console.error('OOPs:', err)
+//                         flashMsg('Cannot update location')
+//                     })
+
+//             }
+//         })
+// }
 
 function onSelectLoc(locId) {
     return locService.getById(locId)
@@ -247,8 +268,8 @@ function onSetSortBy() {
     loadAndRenderLocs()
 }
 
-function onSetFilterBy({ txt, minRate, address }) {
-    const filterBy = locService.setFilterBy({ txt, minRate: +minRate, address })
+function onSetFilterBy({ txt, minRate }) {
+    const filterBy = locService.setFilterBy({ txt, minRate: +minRate })
     utilService.updateQueryParams(filterBy)
     loadAndRenderLocs()
 }
@@ -308,22 +329,3 @@ function cleanStats(stats) {
     }, [])
     return cleanedStats
 }
-
-function confirmDeleteLoc(locId) {
-    if (confirm('Are you sure you want to delete this location?')) {
-        app.onRemoveLoc(locId)
-    }
-}
-
-function lastUpdatedChart(locs) {
-    const updatedLocs = locs.map(loc => {
-        loc.elapsedTime = utilService.elapsedTime(loc.createdAt)
-        return loc
-    })
-    console.log(updatedLocs)
-    return updatedLocs
-}
-
-// renderChart(){
-
-// }
