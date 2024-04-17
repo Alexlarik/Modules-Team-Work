@@ -16,6 +16,7 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    confirmDeleteLoc
 }
 
 function onInit() {
@@ -50,7 +51,7 @@ function renderLocs(locs) {
                 : ''}
             </p>
             <div class="loc-btns">     
-               <button title="Delete" onclick="app.onRemoveLoc('${loc.id}')">🗑️</button>
+               <button title="Delete" onclick="app.confirmDeleteLoc('${loc.id}')">🗑️</button>
                <button title="Edit" onclick="app.onUpdateLoc('${loc.id}')">✏️</button>
                <button title="Select" onclick="app.onSelectLoc('${loc.id}')">🗺️</button>
             </div>     
@@ -303,4 +304,10 @@ function cleanStats(stats) {
         return acc
     }, [])
     return cleanedStats
+}
+
+function confirmDeleteLoc(locId) {
+    if (confirm('Are you sure you want to delete this location?')) {
+        app.onRemoveLoc(locId)
+    }
 }
