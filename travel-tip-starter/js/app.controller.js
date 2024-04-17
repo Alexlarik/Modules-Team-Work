@@ -16,7 +16,9 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
-    onOpenDialog,
+    confirmDeleteLoc,
+    renderLocDates,
+onOpenDialog,
 }
 console.log('test');
 function onInit() {
@@ -61,6 +63,7 @@ function renderLocs(locs) {
     elLocList.innerHTML = strHTML || 'No locs to show'
 
     renderLocStats()
+    renderLocDates()
 
     if (selectedLocId) {
         const selectedLoc = locs.find(loc => loc.id === selectedLocId)
@@ -288,6 +291,11 @@ function renderLocStats() {
         handleStats(stats, 'loc-stats-rate')
     })
 }
+function renderLocDates() {
+    locService.getLocCountByDateMap().then(stats => {
+        handleStats(stats, 'loc-stats-time')
+    })
+}
 
 function handleStats(stats, selector) {
     // stats = { low: 37, medium: 11, high: 100, total: 148 }
@@ -337,4 +345,10 @@ function cleanStats(stats) {
         return acc
     }, [])
     return cleanedStats
+}
+
+function confirmDeleteLoc(locId) {
+    if (confirm('Are you sure you want to delete this location?')) {
+        app.onRemoveLoc(locId)
+    }
 }
