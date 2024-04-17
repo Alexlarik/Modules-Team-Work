@@ -16,6 +16,8 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    confirmDeleteLoc,
+    lastUpdatedChart
 }
 console.log('test');
 function onInit() {
@@ -41,6 +43,7 @@ function renderLocs(locs) {
         <li class="loc ${className}" data-id="${loc.id}">
             <h4>  
                 <span>${loc.name}</span>
+                <span>${loc.geo.address}</span>
                 <span title="${loc.rate} stars">${'★'.repeat(loc.rate)}</span>
             </h4>
             <p class="muted">
@@ -50,7 +53,7 @@ function renderLocs(locs) {
                 : ''}
             </p>
             <div class="loc-btns">     
-               <button title="Delete" onclick="app.onRemoveLoc('${loc.id}')">🗑️</button>
+               <button title="Delete" onclick="app.confirmDeleteLoc('${loc.id}')">🗑️</button>
                <button title="Edit" onclick="app.onUpdateLoc('${loc.id}')">✏️</button>
                <button title="Select" onclick="app.onSelectLoc('${loc.id}')">🗺️</button>
             </div>     
@@ -119,6 +122,7 @@ function onAddLoc(geo) {
 function loadAndRenderLocs() {
     locService.query()
         .then(renderLocs)
+        // .then(lastUpdatedChart)
         .catch(err => {
             console.error('OOPs:', err)
             flashMsg('Cannot load locations')
@@ -244,8 +248,8 @@ function onSetSortBy() {
     loadAndRenderLocs()
 }
 
-function onSetFilterBy({ txt, minRate }) {
-    const filterBy = locService.setFilterBy({ txt, minRate: +minRate })
+function onSetFilterBy({ txt, minRate, address }) {
+    const filterBy = locService.setFilterBy({ txt, minRate: +minRate, address })
     utilService.updateQueryParams(filterBy)
     loadAndRenderLocs()
 }
@@ -305,3 +309,22 @@ function cleanStats(stats) {
     }, [])
     return cleanedStats
 }
+
+function confirmDeleteLoc(locId) {
+    if (confirm('Are you sure you want to delete this location?')) {
+        app.onRemoveLoc(locId)
+    }
+}
+
+function lastUpdatedChart(locs) {
+    const updatedLocs = locs.map(loc => {
+        loc.elapsedTime = utilService.elapsedTime(loc.createdAt)
+        return loc
+    })
+    console.log(updatedLocs)
+    return updatedLocs
+}
+
+// renderChart(){
+
+// }

@@ -35,6 +35,10 @@
                             oninput="app.onSetFilterBy({txt: this.value})" />
                     </div>
                     <div>
+                        <input type="text" placeholder="Search Address"
+                            oninput="app.onSetFilterBy({address:this.value})">
+                    </div>
+                    <div>
                         <label>
                             Min Rate:
                             <input type="range" min="0" max="5" value="0" class="filter-rate-range"
@@ -62,6 +66,10 @@
                         <div class="pie"></div>
                         <ul class="legend"></ul>
                     </div>
+                    <div class="loc-stats-time"></div>
+                    <h4>By Date:</h4>
+                    <div class="pie"></div>
+                    <ul class="legend"></ul>
                 </section>
             </section>
         </div>
