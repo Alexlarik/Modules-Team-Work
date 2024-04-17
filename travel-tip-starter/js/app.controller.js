@@ -16,7 +16,8 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
-    confirmDeleteLoc
+    confirmDeleteLoc,
+    lastUpdatedChart
 }
 
 function onInit() {
@@ -120,6 +121,7 @@ function onAddLoc(geo) {
 function loadAndRenderLocs() {
     locService.query()
         .then(renderLocs)
+        // .then(lastUpdatedChart)
         .catch(err => {
             console.error('OOPs:', err)
             flashMsg('Cannot load locations')
@@ -312,3 +314,16 @@ function confirmDeleteLoc(locId) {
         app.onRemoveLoc(locId)
     }
 }
+
+function lastUpdatedChart(locs) {
+    const updatedLocs = locs.map(loc => {
+        loc.elapsedTime = utilService.elapsedTime(loc.createdAt)
+        return loc
+    })
+    console.log(updatedLocs)
+    return updatedLocs
+}
+
+// renderChart(){
+
+// }
