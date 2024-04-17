@@ -1,5 +1,24 @@
 .locs-container {
-    background-color: var(--bg3);
+    /* background-color: var(--bg3); */
+    background-image: linear-gradient(
+        60deg, 
+        #04080A, /* Dark blue */
+        #1A1D23, /* Slightly lighter blue */
+        #3E2C4B, /* Purple */
+        #6F3C7E, /* Dark magenta */
+        #000000, /* Black */
+        #2B2E3B, /* Slightly lighter black */
+        #05090D, /* Even lighter black */
+        #070B0F, /* Faint blue */
+        #060A0E, /* Faint purple */
+        #170D1D, /* Faint magenta */
+        #271F2C, /* Deep purple */
+        #381E3C, /* Deep magenta */
+        #191B23, /* Deep blue */
+        #10121A, /* Deep black */
+        #050608, /* Very deep black */
+        #13161B  /* Very deep blue */
+    );
     padding: 0.5em;
     min-height: 100vh;
 }
@@ -52,7 +71,26 @@
 }
 
 .loc-filter {
-    background-color: var(--bg1);
+    /* background-color: var(--bg1); */
+    background-image: linear-gradient(
+        60deg, 
+        #04080A, /* Dark blue */
+        #1A1D23, /* Slightly lighter blue */
+        #3E2C4B, /* Purple */
+        #6F3C7E, /* Dark magenta */
+        #000000, /* Black */
+        #2B2E3B, /* Slightly lighter black */
+        #05090D, /* Even lighter black */
+        #070B0F, /* Faint blue */
+        #060A0E, /* Faint purple */
+        #170D1D, /* Faint magenta */
+        #271F2C, /* Deep purple */
+        #381E3C, /* Deep magenta */
+        #191B23, /* Deep blue */
+        #10121A, /* Deep black */
+        #050608, /* Very deep black */
+        #13161B  /* Very deep blue */
+    );
     padding: 0.3em;
 }
 

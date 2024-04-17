@@ -14,7 +14,78 @@
     }
 }
 
+body{
+    background: linear-gradient(60deg, 
+    #04080A, /* Dark blue */
+    #1A1D23, /* Slightly lighter blue */
+    #3E2C4B, /* Purple */
+    #6F3C7E, /* Dark magenta */
+    #000000, /* Black */
+    #6F3C7E, /* Dark magenta */
+    #2B2E3B, /* Slightly lighter black */
+    #05090D, /* Even lighter black */
+    #070B0F, /* Faint blue */
+    #2B2E3B, /* Slightly lighter black */
+    #6F3C7E, /* Dark magenta */
+    #060A0E, /* Faint purple */
+    #170D1D, /* Faint magenta */
+    #271F2C, /* Deep purple */
+    #381E3C, /* Deep magenta */
+    #191B23, /* Deep blue */
+    #10121A, /* Deep black */
+    #6F3C7E, /* Dark magenta */
+    #050608, /* Very deep black */
+    #13161B  /* Very deep blue */
+);    
+}
+header, dialog {
+        background-image: linear-gradient(
+            60deg, 
+            #02040A, /* Dark blue */
+            #0C0E14, /* Slightly darker blue */
+            #1A1D23, /* Slightly lighter blue */
+            #242931, /* Dark blue */
+            #4F5985, /* Lighter purple */
+            #2C3041, /* Medium blue */
+            #3E455B, /* Slightly darker blue */
+            #4F5985, /* Lighter purple */
+            #5B6694, /* Slightly darker blue */
+            #6E7EBB, /* Light blue */
+            #7B8CC9, /* Slightly darker blue */
+            #9AA9E2, /* Lighter blue */
+            #A7B7F0, /* Slightly darker blue */
+            #5e68d4, /* Very light blue */
+            #9caef1, /* Slightly darker blue */
+            #D5DEF9, /* Pale blue */
+            #DDE7FD, /* Slightly darker blue */
+            /* #E7EEFF, Even paler blue */
+            /* #ECEFFC, Slightly darker blue */
+            #F0F4FF, /* Very pale blue */
+            /* #EDEEFF, Slightly darker blue */
+            #E2E5F3, /* Pale purple */
+            /* #DEE1F3, Slightly darker blue */
+            #D1CDE1, /* Light purple */
+            #b5a5f0, /* Slightly darker blue */
+            #B1A8D0, /* Lighter purple */
+            #ADA4CF, /* Slightly darker blue */
+            #8B7BBE, /* Medium purple */
+            #8676BD, /* Slightly darker blue */
+            #63509D, /* Dark purple */
+            #5E4B9C, /* Slightly darker blue */
+            #3F2E7D, /* Darker purple */
+            #3A297C  /* Slightly darker blue */
+        );
+    }
+    
+
+
 dialog{
+    display: none;
     background-color: #6fd9cc;
     z-index: 9999999;
+    box-shadow: -1px 1px 9px 11px rgb(19, 20, 22);
+
+}
+.open{
+    display: block;
 }

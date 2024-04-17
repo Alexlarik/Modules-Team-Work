@@ -1,7 +1,7 @@
 import { utilService } from './services/util.service.js'
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-
+let gCurrId =0
 window.onload = onInit
 
 // To make things easier in this project structure 
@@ -19,6 +19,7 @@ window.app = {
     confirmDeleteLoc,
     renderLocDates,
 onOpenDialog,
+onCloseDialog,
 }
 console.log('test');
 function onInit() {
@@ -143,18 +144,24 @@ function onPanToUserPos() {
 }
 
 function onOpenDialog(locId){
+    gCurrId = locId
     const elDialog = document.querySelector(".dialog");
     elDialog.classList.add("open");
     // const elName = elDialog.querySelector(".edit-name").value;
     // const elRate = elDialog.querySelector(".edit-rate").value;
-    onUpdateLoc(locId, elDialog)
+    // onCloseDialog( elDialog)
 }
-
-function onUpdateLoc(locId, elDialog) {
+function onCloseDialog(){
+    const elDialog = document.querySelector(".dialog");
     const elName = elDialog.querySelector(".edit-name").value;
     const elRate = elDialog.querySelector(".edit-rate").value;
     console.log(elDialog.querySelector(".edit-name").value);
     console.log(elDialog.querySelector(".edit-rate").value);
+    onUpdateLoc(gCurrId, elName, elRate)
+    elDialog.classList.remove('.open')
+}
+
+function onUpdateLoc(locId,elName, elRate) {
 
     locService.getById(locId).then((loc) => {
       const rate = elRate;
