@@ -19,7 +19,7 @@ window.app = {
     confirmDeleteLoc,
     lastUpdatedChart
 }
-
+console.log('test');
 function onInit() {
     loadAndRenderLocs()
 
