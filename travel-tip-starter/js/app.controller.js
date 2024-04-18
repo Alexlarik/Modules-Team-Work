@@ -2,6 +2,8 @@ import { utilService } from './services/util.service.js'
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 let gCurrId =0
+// export var gUserPos= {}
+
 window.onload = onInit
 
 // To make things easier in this project structure 
@@ -40,6 +42,9 @@ function renderLocs(locs) {
     const selectedLocId = getLocIdFromQueryParams()
     // console.log('locs:', locs)
     var strHTML = locs.map(loc => {
+        var lat= loc.lat
+        var lng= loc.lng
+       var latLng= { lat, lng}
         const className = (loc.id === selectedLocId) ? 'active' : ''
         return `
         <li class="loc ${className}" data-id="${loc.id}">
@@ -51,6 +56,7 @@ function renderLocs(locs) {
                 Created: ${utilService.elapsedTime(loc.createdAt)}
                 ${(loc.createdAt !== loc.updatedAt) ?
                 ` | Updated: ${utilService.elapsedTime(loc.updatedAt)}`
+                // `${getDistance(gUserPos, latLng, k)}km away`
                 : ''}
             </p>
             <div class="loc-btns">     
@@ -155,10 +161,10 @@ function onCloseDialog(){
     const elDialog = document.querySelector(".dialog");
     const elName = elDialog.querySelector(".edit-name").value;
     const elRate = elDialog.querySelector(".edit-rate").value;
-    console.log(elDialog.querySelector(".edit-name").value);
-    console.log(elDialog.querySelector(".edit-rate").value);
-    onUpdateLoc(gCurrId, elName, elRate)
-    elDialog.classList.remove('.open')
+    console.log(elName)
+    console.log(elRate)
+    onUpdateLoc(gCurrId, elName, elRate);
+    elDialog.classList.remove('open')
 }
 
 function onUpdateLoc(locId,elName, elRate) {
